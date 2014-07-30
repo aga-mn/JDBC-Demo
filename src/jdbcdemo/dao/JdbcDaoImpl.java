@@ -1,7 +1,6 @@
 package jdbcdemo.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +8,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import jdbcdemo.model.Circle;
@@ -16,15 +16,16 @@ import jdbcdemo.model.Circle;
 @Component
 public class JdbcDaoImpl {
 
-	@Autowired
+
 	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplate;
 	
 	public DataSource getDataSource() {
 		return dataSource;
 	}
-
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+		this.jdbcTemplate=new JdbcTemplate(dataSource);
 	}
 
 	public Circle getCircle(int id){
@@ -61,6 +62,22 @@ public class JdbcDaoImpl {
 			catch(SQLException e ){	}
 		}
 
+	}
+	
+	public int getCircleCount(){
+		
+		String sql="SELECT COUNT(*) FROM CIRCLE";
+		return jdbcTemplate.queryForInt(sql);
+			
+	}
+
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 }
