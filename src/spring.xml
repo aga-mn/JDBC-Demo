@@ -16,6 +16,9 @@
 	<property name="initialSize" value="2"/>
 </bean>
 
+<bean id="simpleJdbcDaoImpl" class="jdbcdemo.dao.SimpleJdbcDaoImpl">
+<property name="dataSource" ref="dataSource"/>
+</bean>
 
 
 </beans>
