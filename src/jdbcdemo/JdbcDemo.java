@@ -1,14 +1,19 @@
 package jdbcdemo;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import jdbcdemo.dao.JdbcDaoImpl;
-import jdbcdemo.model.Circle;
 
 public class JdbcDemo {
 
 	public static void main(String[] args) {
 		
-		Circle circle = new JdbcDaoImpl().getCircle(1);
-		System.out.println(circle.getName());
+		ApplicationContext ctx=new ClassPathXmlApplicationContext("spring.xml");
+		JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
+		
+		System.out.println (dao.getCircle(1).getName());
+		
 
 	}
 
