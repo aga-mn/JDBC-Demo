@@ -30,7 +30,7 @@ public class JdbcDaoImpl {
 		this.jdbcTemplate=new JdbcTemplate(dataSource);
 	}
 
-	public Circle getCircle(int id){
+	/*public Circle getCircle(int id){
 
 		Connection conn =null;
 
@@ -65,6 +65,7 @@ public class JdbcDaoImpl {
 		}
 
 	}
+	*/
 	
 	public int getCircleCount(){
 		
@@ -72,7 +73,7 @@ public class JdbcDaoImpl {
 		return jdbcTemplate.queryForInt(sql);
 				
 	}
-	
+		
 	public String getCircleName(int id){
 		
 		String sql="SELECT NAME FROM CIRCLE WHERE ID=? ";
@@ -96,6 +97,18 @@ public class JdbcDaoImpl {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
+	public void insertCircle(Circle circle){
+		
+		String sql="INSERT INTO CIRCLE(ID, NAME) VALUES (?,?)";
+		jdbcTemplate.update(sql, new Object[]{circle.getId(), circle.getName()});
+	}
+	
+	public void createTriangleTable(){
+		String sql="CREATE TABLE TRIANGLE (ID INTEGER, NAME CHAR(50))";
+		jdbcTemplate.execute(sql);
+	}
+	
 	
 	private static final class CircleMapper implements RowMapper<Circle>{
 
